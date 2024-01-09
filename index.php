@@ -34,14 +34,20 @@ class RekomendasiRumah{
                 pow(($kriteria['umurBangunan'] - $d['umurBangunan']),2) + pow(($kriteria['lokasi'] - $d['lokasi']),2)
             ); 
             $jarak = sqrt($jarak);
-            array_push($jarakEuclidian, ["id"=>$d['id'], "jarak"=>$jarak]);
+            array_push($jarakEuclidian, 
+                [
+                    "id"=>$d['id'], 
+                    "jarakEuclidian"=>$jarak,
+                    "umurBangunan" =>$d['umurBangunan'],
+                    "lokasi" => $d['lokasi']
+                ]);
         }
         return $jarakEuclidian;
     }
     public function getRekomendasi()
     {
         $knn = self::KNN($this->kriteria);
-        $key = array_column($knn, 'jarak');
+        $key = array_column($knn, 'jarakEuclidian');
         var_dump($key);
         array_multisort($key, SORT_ASC, $knn);
         return $knn;
@@ -50,7 +56,10 @@ class RekomendasiRumah{
 }
 
 $rekomen = new RekomendasiRumah();
-var_dump($rekomen->getRekomendasi());
+$hasil = $rekomen->getRekomendasi();
+var_dump($hasil);
+echo "Rumah Yang Kami Rekomendasikan ID = {$hasil[0]['id']}, Umur Bangunan = {$hasil[0]['umurBangunan']}, Lokasi = {$hasil[0]['lokasi']}
+<br> Jarak Euclidian = {$hasil[0]['jarakEuclidian']}";
 ?>
 
 
