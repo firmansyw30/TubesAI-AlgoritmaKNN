@@ -2,24 +2,23 @@
 class RekomendasiRumah{
 
     public $kriteria = [
-        "umurBangunan" => 34,
-        "lokasi" => 390,
+        "HARGA" => 4600000000,
+        "LB" => 180,
+        "LT" => 137,
+        "KT" => 4,
+        "KM" => 3,
+        "GRS" => 2,
     ];
     public function getDataSets()
     {
-        $dataRumah = [
-            [
-                "id" => 1,
-                "umurBangunan" => 40,
-                "lokasi" => 410,
-            ],
-            [
-                "id" => 2,
-                "umurBangunan" => 45,
-                "lokasi" => 380,
-            ],
-            
-        ];
+        $fp = fopen('dataSets/dataRumah.csv', 'r');
+        $headers = fgetcsv($fp); // Get column headers
+
+        $dataRumah = array();
+        while (($row = fgetcsv($fp))) {
+            $dataRumah[] = array_combine($headers, $row);
+        }
+        fclose($fp);
         return $dataRumah;
     }
 
@@ -31,15 +30,16 @@ class RekomendasiRumah{
         foreach($dataSets as $d){
             $jarak = 
             ( 
-                pow(($kriteria['umurBangunan'] - $d['umurBangunan']),2) + pow(($kriteria['lokasi'] - $d['lokasi']),2)
+                pow(($kriteria['HARGA'] - $d['HARGA']),2) + pow(($kriteria['LB'] - $d['LB']),2) +
+                pow(($kriteria['LT'] - $d['LT']),2) + pow(($kriteria['KT'] - $d['KT']),2) +
+                pow(($kriteria['KM'] - $d['KM']),2) + pow(($kriteria['GRS'] - $d['GRS']),2)
             ); 
             $jarak = sqrt($jarak);
             array_push($jarakEuclidian, 
                 [
-                    "id"=>$d['id'], 
+                    "no"=>$d['NO'], 
+                    "nama"=>$d['NAMA RUMAH'], 
                     "jarakEuclidian"=>$jarak,
-                    "umurBangunan" =>$d['umurBangunan'],
-                    "lokasi" => $d['lokasi']
                 ]);
         }
         return $jarakEuclidian;
@@ -48,7 +48,7 @@ class RekomendasiRumah{
     {
         $knn = self::KNN($this->kriteria);
         $key = array_column($knn, 'jarakEuclidian');
-        var_dump($key);
+        // var_dump($key);
         array_multisort($key, SORT_ASC, $knn);
         return $knn;
     }
@@ -57,9 +57,13 @@ class RekomendasiRumah{
 
 $rekomen = new RekomendasiRumah();
 $hasil = $rekomen->getRekomendasi();
-var_dump($hasil);
-echo "Rumah Yang Kami Rekomendasikan ID = {$hasil[0]['id']}, Umur Bangunan = {$hasil[0]['umurBangunan']}, Lokasi = {$hasil[0]['lokasi']}
+// var_dump($hasil);
+echo "Rumah Yang Kami Rekomendasikan No = {$hasil[0]['no']}, Nama Rumah = {$hasil[0]['nama']}
 <br> Jarak Euclidian = {$hasil[0]['jarakEuclidian']}";
+
+var_dump($hasil);
+// var_dump($rekomen->getDataSets());
+
 ?>
 
 
