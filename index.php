@@ -36,24 +36,24 @@ $k = 2; // jumlah rekomendasi
           <div class="col-sm-6 mb-3 mb-sm-0 mt-2">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Nama Rumah : <?= $hasil[$i]['nama'] ?></h5>
+                <h5 class="card-title"><b>Nama Rumah :</b> <?= $hasil[$i]['nama'] ?></h5>
                 <h4>
                     <span class="badge rounded-pill text-bg-primary">
-                        Harga : <?= number_format($hasil[$i]['harga'],0,",",".") ?>
+                        <b>Harga :</b> <?= number_format($hasil[$i]['harga'],0,",",".") ?>
                     </span>
                 </h4>
                 <div class="row">
-                    <div class="col">Luas Tanah : <?= $hasil[$i]['lt'] ?></div>
-                    <div class="col">Luas Bangunan : <?= $hasil[$i]['lb'] ?></div>
-                    <div class="col">Kamar Tidur : <?= $hasil[$i]['kt'] ?></div>
+                    <div class="col"><b>Luas Tanah :</b> <?= $hasil[$i]['lt'] ?>m<sup>2</sup></div>
+                    <div class="col"><b>Luas Bangunan :</b> <?= $hasil[$i]['lb'] ?>m<sup>2</sup></div>
+                    <div class="col"><b>Kamar Tidur :</b> <?= $hasil[$i]['kt'] ?></div>
                 </div>
                 <div class="row">
-                    <div class="col">Kamar Mandi : <?= $hasil[$i]['km'] ?></div>
-                    <div class="col">Garasi : <?= $hasil[$i]['grs'] ?></div>
+                    <div class="col"><b>Kamar Mandi :</b> <?= $hasil[$i]['km'] ?></div>
+                    <div class="col"><b>Garasi :</b> <?= $hasil[$i]['grs'] ?></div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        Jarak Euclidian : <?= $hasil[$i]['jarakEuclidian'] ?>
+                        <b>Jarak Euclidian :</b> <?= $hasil[$i]['jarakEuclidian'] ?>
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#modalDetailPerhitungan"

@@ -26,7 +26,6 @@ class RekomendasiRumah{
     {
         $jarakEuclidian = [];
         $dataSets = self::getDataSets();
-        $k = 2;
         foreach($dataSets as $d){
             $jarak = 
             ( 
