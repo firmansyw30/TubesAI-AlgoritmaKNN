@@ -39,6 +39,12 @@ class RekomendasiRumah{
                 [
                     "no"=>$d['NO'], 
                     "nama"=>$d['NAMA RUMAH'], 
+                    "harga"=>$d['HARGA'], 
+                    "lb"=>$d['LB'], 
+                    "lt"=>$d['LT'], 
+                    "kt"=>$d['KT'], 
+                    "km"=>$d['KM'], 
+                    "grs"=>$d['GRS'], 
                     "jarakEuclidian"=>$jarak,
                 ]);
         }

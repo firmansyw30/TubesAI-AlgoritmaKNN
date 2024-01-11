@@ -2,16 +2,68 @@
 include_once "RekomendasiRumah.php";
 $rekomen = new RekomendasiRumah();
 $hasil = $rekomen->getRekomendasi();
-// var_dump($hasil);
-echo "Rumah Yang Kami Rekomendasikan No = {$hasil[0]['no']}, Nama Rumah = {$hasil[0]['nama']}
-<br> Jarak Euclidian = {$hasil[0]['jarakEuclidian']}";
+$k = 2; // jumlah rekomendasi
 
-var_dump($hasil);
+// var_dump($hasil);
 // var_dump($rekomen->getDataSets());
 
 ?>
 
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>TUBES AI | KNN</title>
+</head>
+<body>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+   <div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+        <div class="col"><img src="img/ai.png" alt="" width="100"></div>
+        <div class="col align-middle">
+            <a class="navbar-brand" href="#">Rekomendasi Rumah Menggunakan Algoritma KNN</a>
+        </div>
+    </div>
+    
+  </div>
+</nav>
+    <div class="container mt-3">
+        <div class="row">
+        <h3><span class="badge text-bg-info">Jumlah Rekomendasi : <?= $k ?></span></h3>
+        <?php for($i=0; $i<$k; $i++) : ?>
+          <div class="col-sm-6 mb-3 mb-sm-0 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Nama Rumah : <?= $hasil[$i]['nama'] ?></h5>
+                <h4>
+                    <span class="badge rounded-pill text-bg-primary">
+                        Harga : <?= number_format($hasil[$i]['harga'],0,",",".") ?>
+                    </span>
+                </h4>
+                <div class="row">
+                    <div class="col">Luas Tanah : <?= $hasil[$i]['lt'] ?></div>
+                    <div class="col">Luas Bangunan : <?= $hasil[$i]['lb'] ?></div>
+                    <div class="col">Kamar Tidur : <?= $hasil[$i]['kt'] ?></div>
+                </div>
+                <div class="row">
+                    <div class="col">Kamar Mandi : <?= $hasil[$i]['km'] ?></div>
+                    <div class="col">Garasi : <?= $hasil[$i]['grs'] ?></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Jarak Euclidian : <?= $hasil[$i]['jarakEuclidian'] ?>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endfor; ?>
+        </div>
+    </div>
+</body>
+</html>
 
 
 
