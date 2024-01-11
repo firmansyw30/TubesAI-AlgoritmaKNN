@@ -46,6 +46,13 @@ class RekomendasiRumah{
                     "km"=>$d['KM'], 
                     "grs"=>$d['GRS'], 
                     "jarakEuclidian"=>$jarak,
+                    "perhitungan" => 
+                    "&#8730;( 
+                        ({$kriteria['HARGA']} - {$kriteria['HARGA']})<sup>2</sup> + ({$kriteria['LB']} - {$kriteria['LB']})<sup>2</sup> +
+                        ({$kriteria['LT']} - {$kriteria['LT']})<sup>2</sup> + ({$kriteria['KT']} - {$kriteria['KT']})<sup>2</sup> +
+                        ({$kriteria['KM']} - {$kriteria['KM']})<sup>2</sup> + ({$kriteria['GRS']} - {$kriteria['GRS']})<sup>2</sup>)
+                        = {$jarak}
+                    "
                 ]);
         }
         return $jarakEuclidian;
