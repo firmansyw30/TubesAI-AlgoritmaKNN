@@ -1,14 +1,15 @@
 <?php 
 class RekomendasiRumah{
 
-    public $kriteria = [
-        "HARGA" => 4600000000,
-        "LB" => 180,
-        "LT" => 137,
-        "KT" => 4,
-        "KM" => 3,
-        "GRS" => 2,
-    ];
+    // public $kriteria = [
+    //     "HARGA" => 4600000000,
+    //     "LB" => 180,
+    //     "LT" => 137,
+    //     "KT" => 4,
+    //     "KM" => 3,
+    //     "GRS" => 2,
+    // ];
+    public $kriteria = [];
     public function getDataSets()
     {
         $fp = fopen('dataSets/dataRumah.csv', 'r');
@@ -26,7 +27,19 @@ class RekomendasiRumah{
     {
         $jarakEuclidian = [];
         $dataSets = self::getDataSets();
+
         foreach($dataSets as $d){
+        // set angka default untuk harga, lb,lt jika dikosongkan
+            if($kriteria['HARGA'] === ''){
+                $kriteria['HARGA'] = $d['HARGA'];
+            }
+            if($kriteria['LT'] === ''){
+                $kriteria['LT'] = $d['LT'];
+            }
+            if($kriteria['LB'] === ''){
+                $kriteria['LB'] = $d['LB'];
+            }
+
             $jarak = 
             ( 
                 pow(($kriteria['HARGA'] - $d['HARGA']),2) + pow(($kriteria['LB'] - $d['LB']),2) +
@@ -36,14 +49,14 @@ class RekomendasiRumah{
             $jarak = sqrt($jarak);
             array_push($jarakEuclidian, 
                 [
-                    "no"=>$d['NO'], 
-                    "nama"=>$d['NAMA RUMAH'], 
-                    "harga"=>$d['HARGA'], 
-                    "lb"=>$d['LB'], 
-                    "lt"=>$d['LT'], 
-                    "kt"=>$d['KT'], 
-                    "km"=>$d['KM'], 
-                    "grs"=>$d['GRS'], 
+                    "NO"=>$d['NO'], 
+                    "NAMA RUMAH"=>$d['NAMA RUMAH'], 
+                    "HARGA"=>$d['HARGA'], 
+                    "LB"=>$d['LB'], 
+                    "LT"=>$d['LT'], 
+                    "KT"=>$d['KT'], 
+                    "KM"=>$d['KM'], 
+                    "GRS"=>$d['GRS'], 
                     "jarakEuclidian"=>$jarak,
                     "perhitungan" => 
                     "&#8730;( 

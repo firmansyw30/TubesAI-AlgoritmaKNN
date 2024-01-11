@@ -1,9 +1,22 @@
 <?php
 include_once "RekomendasiRumah.php";
 $rekomen = new RekomendasiRumah();
-$hasil = $rekomen->getRekomendasi();
-$k = 2; // jumlah rekomendasi
 
+if (isset($_POST['cari'])) {
+    $k = 2; // jumlah rekomendasi
+    $rekomen->kriteria = [
+        "HARGA" => $_POST['harga'],
+        "LB" => $_POST['lb'],
+        "LT" => $_POST['lt'],
+        "KT" => $_POST['kt'],
+        "KM" => $_POST['km'],
+        "GRS" => $_POST['grs']
+    ];
+    $hasil = $rekomen->getRekomendasi();
+}else{
+    $k = 1010;
+    $hasil = $rekomen->getDataSets();
+}
 // var_dump($hasil);
 // var_dump($rekomen->getDataSets());
 
@@ -30,27 +43,34 @@ $k = 2; // jumlah rekomendasi
   </div>
 </nav>
     <div class="container mt-3">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalInput" id="btn-kriteria">
+          Masukkan Kriteriamu
+        </button>
         <div class="row">
-        <h3><span class="badge text-bg-info">Jumlah Rekomendasi : <?= $k ?></span></h3>
+        <?php if(isset($hasil[0]['jarakEuclidian'])) : ?>
+            <h3><span class="badge text-bg-info">Jumlah Rekomendasi : <?= $k ?></span></h3>
+        <?php endif; ?>
         <?php for($i=0; $i<$k; $i++) : ?>
           <div class="col-sm-6 mb-3 mb-sm-0 mt-2">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><b>Nama Rumah :</b> <?= $hasil[$i]['nama'] ?></h5>
+                <h5 class="card-title"><b>Nama Rumah :</b> <?= $hasil[$i]['NAMA RUMAH'] ?></h5>
                 <h4>
                     <span class="badge rounded-pill text-bg-primary">
-                        <b>Harga :</b> <?= number_format($hasil[$i]['harga'],0,",",".") ?>
+                        <b>Harga :</b> <?= number_format($hasil[$i]['HARGA'],0,",",".") ?>
                     </span>
                 </h4>
                 <div class="row">
-                    <div class="col"><b>Luas Tanah :</b> <?= $hasil[$i]['lt'] ?>m<sup>2</sup></div>
-                    <div class="col"><b>Luas Bangunan :</b> <?= $hasil[$i]['lb'] ?>m<sup>2</sup></div>
-                    <div class="col"><b>Kamar Tidur :</b> <?= $hasil[$i]['kt'] ?></div>
+                    <div class="col"><b>Luas Tanah :</b> <?= $hasil[$i]['LT'] ?>m<sup>2</sup></div>
+                    <div class="col"><b>Luas Bangunan :</b> <?= $hasil[$i]['LB'] ?>m<sup>2</sup></div>
+                    <div class="col"><b>Kamar Tidur :</b> <?= $hasil[$i]['KT'] ?></div>
                 </div>
                 <div class="row">
-                    <div class="col"><b>Kamar Mandi :</b> <?= $hasil[$i]['km'] ?></div>
-                    <div class="col"><b>Garasi :</b> <?= $hasil[$i]['grs'] ?></div>
+                    <div class="col"><b>Kamar Mandi :</b> <?= $hasil[$i]['KM'] ?></div>
+                    <div class="col"><b>Garasi :</b> <?= $hasil[$i]['GRS'] ?></div>
                 </div>
+                <?php if(isset($hasil[$i]['jarakEuclidian'])) : ?>
                 <div class="row">
                     <div class="col">
                         <b>Jarak Euclidian :</b> <?= $hasil[$i]['jarakEuclidian'] ?>
@@ -60,6 +80,7 @@ $k = 2; // jumlah rekomendasi
                 data-perhitungan="<?= $hasil[$i]['perhitungan'] ?>" id="btn-detail">
                   Detail Perhitungan
                 </button>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -67,10 +88,8 @@ $k = 2; // jumlah rekomendasi
         </div>
     </div>
 
-<!-- Button trigger modal -->
 
-
-<!-- Modal -->
+<!-- Modal Detail Perhitungan -->
 <div class="modal modal-lg fade" id="modalDetailPerhitungan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -90,10 +109,59 @@ $k = 2; // jumlah rekomendasi
     </div>
   </div>
 </div>
+
+
+
+<!-- Modal Input kriteria-->
+<div class="modal fade " id="modalInput" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+            <form action="index.php" method="post">
+                <div class="mb-3">
+                    <label for="harga">Harga</label>
+                    <input type="number" name="harga" id="harga" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="lb">Lebar Bangunan</label>
+                    <input type="number" name="lb" id="lb" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="lt">Luas Tanah</label>
+                    <input type="number" name="lt" id="lt" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="kt">Kamar Tidur</label>
+                    <input type="number" name="kt" id="kt" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="km">Kamar Mandi</label>
+                    <input type="number" name="km" id="km" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="grs">Garasi</label>
+                    <input type="number" name="grs" id="grs" class="form-control" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" name="cari">Cari</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
 <script>
     $(document).on('click', '#btn-detail', function() {
         const perhitungan = $(this).data('perhitungan');
