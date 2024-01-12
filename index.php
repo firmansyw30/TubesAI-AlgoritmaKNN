@@ -3,7 +3,7 @@ include_once "RekomendasiRumah.php";
 $rekomen = new RekomendasiRumah();
 
 if (isset($_POST['cari'])) {
-    $k = 2; // jumlah rekomendasi
+    $k = $_POST['jml']; // jumlah rekomendasi
     $rekomen->kriteria = [
         "HARGA" => $_POST['harga'],
         "LB" => $_POST['lb'],
@@ -92,6 +92,45 @@ if (isset($_POST['cari'])) {
     </div>
 
 
+<?php if(isset($hasil[0]['jarakEuclidian'])) : ?>
+<div class="container mt-4">
+    <div class="bg-primary bg-gradient badge text-bg-primary mb-1">
+        <h3>
+        Perhitungan Seluruh Jarak Euclidian
+        </h3>
+    </div>
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th scope="col">NO</th>
+          <th scope="col">Nama</th>
+          <th scope="col">Jarak Euclidian</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php $i=1; ?>
+        <?php foreach($hasil as $h) : ?>
+        <tr>
+            <th scope="row"><?= $i ?></th>
+            <td><?= $h['NAMA RUMAH'] ?></td>
+            <td><?= $h['jarakEuclidian'] ?></td>
+            <td>
+                <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#modalDetailPerhitungan"
+                data-perhitungan="<?= $h['perhitungan'] ?>" data-harga="<?= $h['HARGA'] ?>"
+                data-lt="<?= $h['LT'] ?>" data-lb="<?= $h['LB'] ?>" 
+                data-kt="<?= $h['KT'] ?>" data-km="<?= $h['KM'] ?>"
+                data-grs="<?= $h['GRS'] ?>" id="btn-detail">
+                    Detail
+                </button>
+            </td>
+        </tr>
+        <?php $i++; endforeach; ?>
+      </tbody>
+    </table>
+</div>
+<?php endif; ?>
+
 
 <!-- Modal Detail Perhitungan -->
 <div class="modal modal-lg fade" id="modalDetailPerhitungan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -173,6 +212,10 @@ if (isset($_POST['cari'])) {
       </div>
         <div class="modal-body">
             <form action="index.php" method="post">
+                <div class="mb-3">
+                    <label for="jml">Jumlah Rekomendasi</label>
+                    <input type="number" name="jml" id="jml" class="form-control" required>
+                </div>
                 <div class="mb-3">
                     <label for="harga">Harga</label>
                     <input type="number" name="harga" id="harga" class="form-control">
