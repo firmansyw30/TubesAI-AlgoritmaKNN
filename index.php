@@ -77,7 +77,10 @@ if (isset($_POST['cari'])) {
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#modalDetailPerhitungan"
-                data-perhitungan="<?= $hasil[$i]['perhitungan'] ?>" id="btn-detail">
+                data-perhitungan="<?= $hasil[$i]['perhitungan'] ?>" data-harga="<?= $hasil[$i]['HARGA'] ?>"
+                data-lt="<?= $hasil[$i]['LT'] ?>" data-lb="<?= $hasil[$i]['LB'] ?>" 
+                data-kt="<?= $hasil[$i]['KT'] ?>" data-km="<?= $hasil[$i]['KM'] ?>"
+                data-grs="<?= $hasil[$i]['GRS'] ?>" id="btn-detail">
                   Detail Perhitungan
                 </button>
                 <?php endif; ?>
@@ -89,18 +92,66 @@ if (isset($_POST['cari'])) {
     </div>
 
 
+
 <!-- Modal Detail Perhitungan -->
 <div class="modal modal-lg fade" id="modalDetailPerhitungan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-primary text-white">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Perhitungan</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div id="perhitungan">
-            
+        
+        <div id="perhitungan"></div>
+        <div class="note small">
+            <p>
+            NOTE : jika user tidak memasukkan kriteria harga/luas tanah/luas bangunan 
+            maka nilai kriteria harga/luas tanah/luas bangunan diberi nilai 
+            yang sama dengan masing-masing data rumah yang dihitung
+            </p>
         </div>
+        <table class="table table-hover mt-3">
+            <thead class="table table-primary">
+                <tr>
+                  <th scope="col">Variable</th>
+                  <th scope="col">Kriteria</th>
+                  <th scope="col">Data Ini</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>Harga</td>    
+                  <td><?= $_POST['harga'] ?></td>
+                  <td id="harga"></td>
+                </tr>
+                <tr>
+                  <td>Luas Bangunan</td>
+                  <td><?= $_POST['lb'] ?></td>
+                  <td id="lb"></td>
+                </tr>
+                <tr>
+                  <td>Luas Tanah</td>
+                  <td><?= $_POST['lt'] ?></td>
+                  <td id="lt"></td>
+                </tr>
+                <tr>
+                  <td>Kamar Tidur</td>
+                  <td><?= $_POST['kt'] ?></td>
+                  <td id="kt"></td>
+                </tr>
+                <tr>
+                  <td>Kamar Mandi</td>
+                  <td><?= $_POST['km'] ?></td>
+                  <td id="km"></td>
+                </tr>
+                <tr>
+                  <td>Garasi</td>
+                  <td><?= $_POST['grs'] ?></td>
+                  <td id="grs"></td>
+                </tr>
+            </tbody>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -165,9 +216,23 @@ if (isset($_POST['cari'])) {
 <script>
     $(document).on('click', '#btn-detail', function() {
         const perhitungan = $(this).data('perhitungan');
+        const harga = $(this).data('harga');
+        const lb = $(this).data('lb');
+        const lt = $(this).data('lt');
+        const kt = $(this).data('kt');
+        const km = $(this).data('km');
+        const grs = $(this).data('grs');
+
         console.log(perhitungan);
         $('#modalDetailPerhitungan .modal-body #perhitungan').html(perhitungan);
+        $('#modalDetailPerhitungan .modal-body #harga').html(harga);
+        $('#modalDetailPerhitungan .modal-body #lb').html(lb);
+        $('#modalDetailPerhitungan .modal-body #lt').html(lt);
+        $('#modalDetailPerhitungan .modal-body #kt').html(kt);
+        $('#modalDetailPerhitungan .modal-body #km').html(km);
+        $('#modalDetailPerhitungan .modal-body #grs').html(grs);
     });
+
 </script>
 </body>
 </html>

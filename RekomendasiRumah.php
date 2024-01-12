@@ -12,6 +12,7 @@ class RekomendasiRumah{
     public $kriteria = [];
     public function getDataSets()
     {
+        // CONVERT CSV TO ARRAY
         $fp = fopen('dataSets/dataRumah.csv', 'r');
         $headers = fgetcsv($fp); // Get column headers
 
@@ -19,7 +20,12 @@ class RekomendasiRumah{
         while (($row = fgetcsv($fp))) {
             $dataRumah[] = array_combine($headers, $row);
         }
+        // convert csv to json (untuk datatable) (TIDAK JADI PAKE DATATABLE)
+        // $json = json_encode($dataRumah, JSON_PRETTY_PRINT);
+        // $output_filename = 'dataSets/dataRumah.json';
+        // file_put_contents($output_filename, $json);
         fclose($fp);
+
         return $dataRumah;
     }
 
