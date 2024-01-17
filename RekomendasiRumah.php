@@ -60,7 +60,7 @@ class RekomendasiRumah{
             // var_dump($this->kriteria);
             // var_dump($krt);
             // die();
-            
+
             $jarak = 
             ( 
                 pow(($krt['HARGA'] - $d['HARGA']),2) + pow(($krt['LB'] - $d['LB']),2) +
@@ -85,8 +85,6 @@ class RekomendasiRumah{
                         ({$krt['LT']} - {$d['LT']})<sup>2</sup> + ({$krt['KT']} - {$d['KT']})<sup>2</sup> +
                         ({$krt['KM']} - {$krt['KM']})<sup>2</sup> + ({$krt['GRS']} - {$d['GRS']})<sup>2</sup>
                         ) = {$jarak}",
-                    "totalKesesuaian" => "",
-                    "statusRekomendasi" => ""
                 ]);
         }
         return $hasilKNN;

@@ -106,6 +106,7 @@ if (isset($_POST['cari'])) {
           <th scope="col">NO</th>
           <th scope="col">Nama</th>
           <th scope="col">Jarak Euclidian</th>
+          <th scope="col">Status</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -117,6 +118,14 @@ if (isset($_POST['cari'])) {
             <td><?= $h['NAMA RUMAH'] ?></td>
             <td><?= $h['jarakEuclidian'] ?></td>
             <td>
+                <?php if($i <= $rekomen->k) : ?>
+                    <span class="badge text-bg-primary">Direkomendasikan</span>
+                <?php else : ?>
+                    <span class="badge text-bg-danger">Tidak Direkomendasikan</span>
+                <?php endif; ?>
+
+            </td>
+            <td>
                 <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#modalDetailPerhitungan"
                 data-perhitungan="<?= $h['perhitungan'] ?>" data-harga="<?= $h['HARGA'] ?>"
                 data-lt="<?= $h['LT'] ?>" data-lb="<?= $h['LB'] ?>" 
@@ -125,6 +134,7 @@ if (isset($_POST['cari'])) {
                     Detail
                 </button>
             </td>
+
         </tr>
         <?php $i++; endforeach; ?>
       </tbody>
