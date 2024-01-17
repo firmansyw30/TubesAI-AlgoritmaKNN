@@ -29,15 +29,18 @@ if (isset($_POST['cari'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
     <title>TUBES AI | KNN</title>
 </head>
 <body>
 <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
    <div class="container-fluid">
-    <div class="row d-flex justify-content-center">
-        <div class="col"><img src="img/ai.png" alt="" width="100"></div>
+    <div class="row d-flex justify-content-center align-items-center">
+        <img src="img/ai.png" alt="" style="width:5vw;">
         <div class="col align-middle">
-            <a class="navbar-brand" href="#">Rekomendasi Rumah Menggunakan Algoritma KNN</a>
+            <a class="navbar-brand" href="#" style="font-family: 'Bungee Spice';">Rekomendasi Rumah Menggunakan Algoritma KNN</a>
         </div>
     </div>
     
@@ -56,6 +59,9 @@ if (isset($_POST['cari'])) {
           <div class="col-sm-6 mb-3 mb-sm-0 mt-2">
             <div class="card">
               <div class="card-body">
+                <div class="img-rumah">
+                    <img src="img/<?= rand(1,13) ?>.jpg" alt="" style="width: 100%;">
+                </div>
                 <h5 class="card-title"><b>Nama Rumah :</b> <?= $hasil[$i]['NAMA RUMAH'] ?></h5>
                 <h4>
                     <span class="badge rounded-pill text-bg-primary">
