@@ -15,8 +15,8 @@ if (isset($_POST['cari'])) {
     $hasil = $rekomen->getRekomendasi();
     // var_dump($hasil); die();
 }else{
-    $rekomen->k = 1010;
     $hasil = $rekomen->getDataSets();
+    $rekomen->k = count($hasil);
 }
 // var_dump($hasil);
 // var_dump($rekomen->getDataSets());
