@@ -59,7 +59,7 @@ if (isset($_POST['cari'])) {
           <div class="col-sm-6 mb-3 mb-sm-0 mt-2">
             <div class="card">
               <div class="card-body">
-                <div class="img-rumah">
+                <div class="img-rumah mb-3">
                     <img src="img/<?= rand(1,13) ?>.jpg" alt="" style="width: 100%;">
                 </div>
                 <h5 class="card-title"><b>Nama Rumah :</b> <?= $hasil[$i]['NAMA RUMAH'] ?></h5>
@@ -230,7 +230,7 @@ if (isset($_POST['cari'])) {
         <div class="modal-body">
             <form action="index.php" method="post">
                 <div class="mb-3">
-                    <label for="jml">Jumlah Rekomendasi</label>
+                    <label for="jml">Jumlah Rekomendasi (k)</label>
                     <input type="number" name="jml" id="jml" class="form-control" required>
                 </div>
                 <div class="mb-3">
