@@ -230,7 +230,7 @@ if (isset($_POST['cari'])) {
         <div class="modal-body">
             <form action="index.php" method="post">
                 <div class="mb-3">
-                    <label for="jml">Jumlah Rekomendasi</label>
+                    <label for="jml">Jumlah Rekomendasi (k)</label>
                     <input type="number" name="jml" id="jml" class="form-control" required>
                 </div>
                 <div class="mb-3">
