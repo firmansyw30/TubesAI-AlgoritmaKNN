@@ -3,7 +3,7 @@ include_once "RekomendasiRumah.php";
 $rekomen = new RekomendasiRumah();
 
 if (isset($_POST['cari'])) {
-    $k = $_POST['jml']; // jumlah rekomendasi
+    $rekomen->k = $k = $_POST['jml']; // jumlah rekomendasi
     $rekomen->kriteria = [
         "HARGA" => $_POST['harga'],
         "LB" => $_POST['lb'],
@@ -13,8 +13,9 @@ if (isset($_POST['cari'])) {
         "GRS" => $_POST['grs']
     ];
     $hasil = $rekomen->getRekomendasi();
+    // var_dump($hasil); die();
 }else{
-    $k = 1010;
+    $rekomen->k = 1010;
     $hasil = $rekomen->getDataSets();
 }
 // var_dump($hasil);
@@ -51,7 +52,7 @@ if (isset($_POST['cari'])) {
         <?php if(isset($hasil[0]['jarakEuclidian'])) : ?>
             <h3><span class="badge text-bg-info">Jumlah Rekomendasi : <?= $k ?></span></h3>
         <?php endif; ?>
-        <?php for($i=0; $i<$k; $i++) : ?>
+        <?php for($i=0; $i<$rekomen->k; $i++) : ?>
           <div class="col-sm-6 mb-3 mb-sm-0 mt-2">
             <div class="card">
               <div class="card-body">
@@ -218,27 +219,27 @@ if (isset($_POST['cari'])) {
                 </div>
                 <div class="mb-3">
                     <label for="harga">Harga</label>
-                    <input type="number" name="harga" id="harga" class="form-control">
+                    <input type="number" name="harga" id="harga" class="form-control" value="">
                 </div>
                 <div class="mb-3">
                     <label for="lb">Lebar Bangunan</label>
-                    <input type="number" name="lb" id="lb" class="form-control">
+                    <input type="number" name="lb" id="lb" class="form-control" value=""> 
                 </div>
                 <div class="mb-3">
                     <label for="lt">Luas Tanah</label>
-                    <input type="number" name="lt" id="lt" class="form-control">
+                    <input type="number" name="lt" id="lt" class="form-control" value="">
                 </div>
                 <div class="mb-3">
                     <label for="kt">Kamar Tidur</label>
-                    <input type="number" name="kt" id="kt" class="form-control" required>
+                    <input type="number" name="kt" id="kt" class="form-control" value="">
                 </div>
                 <div class="mb-3">
                     <label for="km">Kamar Mandi</label>
-                    <input type="number" name="km" id="km" class="form-control" required>
+                    <input type="number" name="km" id="km" class="form-control" value="">
                 </div>
                 <div class="mb-3">
                     <label for="grs">Garasi</label>
-                    <input type="number" name="grs" id="grs" class="form-control" required>
+                    <input type="number" name="grs" id="grs" class="form-control" value="">
                 </div>
             </div>
             <div class="modal-footer">

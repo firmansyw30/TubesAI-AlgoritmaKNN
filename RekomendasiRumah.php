@@ -9,6 +9,7 @@ class RekomendasiRumah{
     //     "KM" => 3,
     //     "GRS" => 2,
     // ];
+    public $k;
     public $kriteria = [];
     public function getDataSets()
     {
@@ -29,31 +30,45 @@ class RekomendasiRumah{
         return $dataRumah;
     }
 
-    public function KNN($kriteria)
+    public function KNN($krt) // krt = kriteria
     {
-        $jarakEuclidian = [];
+        $hasilKNN = [];
         $dataSets = self::getDataSets();
 
         foreach($dataSets as $d){
-        // set angka default untuk harga, lb,lt jika dikosongkan
-            if($kriteria['HARGA'] === ''){
-                $kriteria['HARGA'] = $d['HARGA'];
-            }
-            if($kriteria['LT'] === ''){
-                $kriteria['LT'] = $d['LT'];
-            }
-            if($kriteria['LB'] === ''){
-                $kriteria['LB'] = $d['LB'];
-            }
 
+        // set angka default untuk harga, lb,lt jika dikosongkan
+            if($this->kriteria['HARGA'] === ''){
+                $krt['HARGA'] = $d['HARGA'];
+            }
+            if($this->kriteria['LT'] === ''){
+                $krt['LT'] = $d['LT'];
+            }
+            if($this->kriteria['LB'] === ''){
+                $krt['LB'] = $d['LB'];
+            }
+            if($this->kriteria['KT'] === ''){
+                $krt['KT'] = $d['KT'];
+            }
+            if($this->kriteria['KM'] === ''){
+                $krt['KM'] = $d['KM'];
+            }
+            if($this->kriteria['GRS'] === ''){
+                $krt['GRS'] = $d['GRS'];
+            }
+            // perbandingan sebelum dan sesudah diset defaultnya
+            // var_dump($this->kriteria);
+            // var_dump($krt);
+            // die();
+            
             $jarak = 
             ( 
-                pow(($kriteria['HARGA'] - $d['HARGA']),2) + pow(($kriteria['LB'] - $d['LB']),2) +
-                pow(($kriteria['LT'] - $d['LT']),2) + pow(($kriteria['KT'] - $d['KT']),2) +
-                pow(($kriteria['KM'] - $d['KM']),2) + pow(($kriteria['GRS'] - $d['GRS']),2)
+                pow(($krt['HARGA'] - $d['HARGA']),2) + pow(($krt['LB'] - $d['LB']),2) +
+                pow(($krt['LT'] - $d['LT']),2) + pow(($krt['KT'] - $d['KT']),2) +
+                pow(($krt['KM'] - $d['KM']),2) + pow(($krt['GRS'] - $d['GRS']),2)
             ); 
             $jarak = sqrt($jarak);
-            array_push($jarakEuclidian, 
+            array_push($hasilKNN, 
                 [
                     "NO"=>$d['NO'], 
                     "NAMA RUMAH"=>$d['NAMA RUMAH'], 
@@ -66,14 +81,15 @@ class RekomendasiRumah{
                     "jarakEuclidian"=>$jarak,
                     "perhitungan" => 
                     "&#8730;( 
-                        ({$kriteria['HARGA']} - {$kriteria['HARGA']})<sup>2</sup> + ({$kriteria['LB']} - {$kriteria['LB']})<sup>2</sup> +
-                        ({$kriteria['LT']} - {$kriteria['LT']})<sup>2</sup> + ({$kriteria['KT']} - {$kriteria['KT']})<sup>2</sup> +
-                        ({$kriteria['KM']} - {$kriteria['KM']})<sup>2</sup> + ({$kriteria['GRS']} - {$kriteria['GRS']})<sup>2</sup>)
-                        = {$jarak}
-                    "
+                        ({$krt['HARGA']} - {$d['HARGA']})<sup>2</sup> + ({$krt['LB']} - {$d['LB']})<sup>2</sup> +
+                        ({$krt['LT']} - {$d['LT']})<sup>2</sup> + ({$krt['KT']} - {$d['KT']})<sup>2</sup> +
+                        ({$krt['KM']} - {$krt['KM']})<sup>2</sup> + ({$krt['GRS']} - {$d['GRS']})<sup>2</sup>
+                        ) = {$jarak}",
+                    "totalKesesuaian" => "",
+                    "statusRekomendasi" => ""
                 ]);
         }
-        return $jarakEuclidian;
+        return $hasilKNN;
     }
     public function getRekomendasi()
     {
@@ -81,6 +97,7 @@ class RekomendasiRumah{
         $key = array_column($knn, 'jarakEuclidian');
         // var_dump($key);
         array_multisort($key, SORT_ASC, $knn);
+        // var_dump($knn); die();
         return $knn;
     }
 
