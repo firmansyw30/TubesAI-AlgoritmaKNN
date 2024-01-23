@@ -19,17 +19,15 @@ class RekomendasiRumah{
 
         $dataRumah = array();
         while (($row = fgetcsv($fp))) {
+            // merangkai array assosiative dengan $header sebagai keynya
             $dataRumah[] = array_combine($headers, $row);
         }
-        // convert csv to json (untuk datatable) (TIDAK JADI PAKE DATATABLE)
-        // $json = json_encode($dataRumah, JSON_PRETTY_PRINT);
-        // $output_filename = 'dataSets/dataRumah.json';
-        // file_put_contents($output_filename, $json);
-        fclose($fp);
 
+        fclose($fp);
         return $dataRumah;
     }
 
+    // fungsi utama algoritma knn
     public function KNN($krt) // krt = kriteria
     {
         $hasilKNN = [];
@@ -56,11 +54,8 @@ class RekomendasiRumah{
             if($this->kriteria['GRS'] === ''){
                 $krt['GRS'] = $d['GRS'];
             }
-            // perbandingan sebelum dan sesudah diset defaultnya
-            // var_dump($this->kriteria);
-            // var_dump($krt);
-            // die();
 
+            // hitung jarak euclidian
             $jarak = 
             ( 
                 pow(($krt['HARGA'] - $d['HARGA']),2) + pow(($krt['LB'] - $d['LB']),2) +
@@ -68,6 +63,8 @@ class RekomendasiRumah{
                 pow(($krt['KM'] - $d['KM']),2) + pow(($krt['GRS'] - $d['GRS']),2)
             ); 
             $jarak = sqrt($jarak);
+
+            // memasukkan hasil perhitungan dan beberapa variabel ke dalam array $hasilKNN
             array_push($hasilKNN, 
                 [
                     "NO"=>$d['NO'], 
@@ -89,13 +86,15 @@ class RekomendasiRumah{
         }
         return $hasilKNN;
     }
+
+    // fungsi untuk mendapatkan rekomendasi berdasarkan variabel input
     public function getRekomendasi()
     {
         $knn = self::KNN($this->kriteria);
         $key = array_column($knn, 'jarakEuclidian');
-        // var_dump($key);
+        
+        // mengurutkan hasil perhitungan jarak euclidian dari terkecil hingga terbesar
         array_multisort($key, SORT_ASC, $knn);
-        // var_dump($knn); die();
         return $knn;
     }
 
