@@ -1,14 +1,6 @@
 <?php 
 class RekomendasiRumah{
 
-    // public $kriteria = [
-    //     "HARGA" => 4600000000,
-    //     "LB" => 180,
-    //     "LT" => 137,
-    //     "KT" => 4,
-    //     "KM" => 3,
-    //     "GRS" => 2,
-    // ];
     public $k;
     public $kriteria = [];
     public function getDataSets()
